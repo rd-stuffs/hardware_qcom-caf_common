@@ -226,16 +226,6 @@ SOONG_CONFIG_rfs += \
 # Set default values for rfs config
 SOONG_CONFIG_rfs_mpss_firmware_symlink_target ?= firmware_mnt
 
-# Add rmnetctl to soong config namespaces
-SOONG_CONFIG_NAMESPACES += rmnetctl
-
-# Add supported variables to rmnetctl config
-SOONG_CONFIG_rmnetctl += \
-    old_rmnet_data
-
-# Set default values for rmnetctl config
-SOONG_CONFIG_rmnetctl_old_rmnet_data ?= false
-
 # Tell HALs that we're compiling an AOSP build with an in-line kernel
 TARGET_COMPILE_WITH_MSM_KERNEL := true
 
@@ -307,7 +297,7 @@ endif
 
 # Opt-in for old rmnet_data driver
 ifeq ($(filter $(UM_5_15_FAMILY) $(UM_6_1_FAMILY),$(TARGET_BOARD_PLATFORM)),)
-    SOONG_CONFIG_rmnetctl_old_rmnet_data := true
+    $(call soong_config_set,rmnetctl,old_rmnet_data,true)
 endif
 
 # Use full QTI gralloc struct for GKI 2.0 targets
